@@ -12,9 +12,9 @@ import {
   Input,
   NavLink,
 } from 'reactstrap';
-import { register } from '../Store/Actions/AuthActions';
+import { login, register } from '../Store/Actions/AuthActions';
 
-export const RegisterModal = (props) => {
+export const LoginModal = (props) => {
   const { buttonLabel, className } = props;
   const dispatch = useDispatch();
 
@@ -28,7 +28,6 @@ export const RegisterModal = (props) => {
     setModal(!modal);
   };
 
-  const handleChangeName = (e) => setName(e.target.value);
   const handleChangeEmail = (e) => setEmail(e.target.value);
   const handleChangePassword = (e) => setPassword(e.target.value);
   const handleOnSubmit = (e) => {
@@ -36,19 +35,17 @@ export const RegisterModal = (props) => {
 
     // Create user object
     const user = {
-      name,
       email,
       password,
     };
-    console.log(user);
 
     // Attempt to login
-    dispatch(register(user));
+    dispatch(login(user));
   };
   return (
     <div>
       <NavLink onClick={toggle} href="#">
-        Register
+        Login
       </NavLink>{' '}
       <Modal
         isOpen={modal}
@@ -56,20 +53,10 @@ export const RegisterModal = (props) => {
         className={className}
         unmountOnClose={unmountOnClose}
       >
-        <ModalHeader toggle={toggle}>Registration</ModalHeader>
+        <ModalHeader toggle={toggle}>Login</ModalHeader>
         <ModalBody>
           <Form onSubmit={handleOnSubmit}>
             <FormGroup>
-              <Label for="name">Name</Label>
-              <Input
-                type="text"
-                name="name"
-                id="name"
-                placeholder="Name"
-                className="mb-3"
-                onChange={handleChangeName}
-              />
-
               <Label for="email">Email</Label>
               <Input
                 type="email"
@@ -90,7 +77,7 @@ export const RegisterModal = (props) => {
                 onChange={handleChangePassword}
               />
               <Button color="dark" style={{ marginTop: '2rem' }} block>
-                Register
+                Login
               </Button>
             </FormGroup>
           </Form>

@@ -3,6 +3,8 @@ const router = express.Router();
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const User = require('../../models/User');
+const auth = require('../../middleware/auth');
+
 require('dotenv').config();
 
 // User Model
@@ -83,6 +85,22 @@ router.post('/login', async (req, res) => {
         email: user.email,
       },
     });
+  } catch (e) {
+    res.status(400).json({ msg: e.message });
+  }
+});
+
+/**
+ * @route   GET api/auth/user
+ * @desc    Get user data
+ * @access  Private
+ */
+
+router.get('/user', auth, async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id).select('-password');
+    if (!user) throw Error('User does not exist');
+    res.json(user);
   } catch (e) {
     res.status(400).json({ msg: e.message });
   }

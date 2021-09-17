@@ -8,6 +8,7 @@ import {
   NavItem,
   NavLink,
 } from 'reactstrap';
+import { LoginModal } from './LoginModal';
 import { RegisterModal } from './RegisterModal';
 
 export const AppNavbar = () => {
@@ -31,9 +32,7 @@ export const AppNavbar = () => {
               <RegisterModal />
             </NavItem>
             <NavItem>
-              <NavLink href="https://github.com/reactstrap/reactstrap">
-                Login
-              </NavLink>
+              <LoginModal />
             </NavItem>
           </Nav>
         </Collapse>
