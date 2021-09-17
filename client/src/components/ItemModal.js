@@ -50,7 +50,7 @@ export const ItemModal = (props) => {
         className={className}
         unmountOnClose={unmountOnClose}
       >
-        <ModalHeader toggle={toggle}>Modal title</ModalHeader>
+        <ModalHeader toggle={toggle}>Add a new person</ModalHeader>
         <ModalBody>
           <Input
             type="text"

@@ -8,6 +8,7 @@ import {
   NavItem,
   NavLink,
 } from 'reactstrap';
+import { RegisterModal } from './RegisterModal';
 
 export const AppNavbar = () => {
   const [collapsed, setCollapsed] = useState(true);
@@ -20,14 +21,18 @@ export const AppNavbar = () => {
           ShoppingList
         </NavbarBrand>
         <NavbarToggler onClick={toggleNavbar} className="mr-2" />
-        <Collapse isOpen={!collapsed} navbar>
-          <Nav className="ml-auto" navbar>
+        <Collapse
+          className="justify-content-end me-5"
+          isOpen={!collapsed}
+          navbar
+        >
+          <Nav className="" navbar>
             <NavItem>
-              <NavLink href="/components/">Components</NavLink>
+              <RegisterModal />
             </NavItem>
             <NavItem>
               <NavLink href="https://github.com/reactstrap/reactstrap">
-                GitHub
+                Login
               </NavLink>
             </NavItem>
           </Nav>

@@ -1,13 +1,6 @@
 import axios from 'axios';
 import { ADD_ITEM, DELETE_ITEM, GET_ITEMS, ITEMS_LOADING } from './actions';
 
-// const config = {
-//   headers: {
-//     'Content-type': 'application/json',
-//   },
-//   baseURL: 'http://localhost:5000',
-// };
-
 export const getItems = () => (dispatch) => {
   dispatch(setItemsLoading());
   axios.get('/api/items').then((res) =>
