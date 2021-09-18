@@ -1,7 +1,7 @@
 import { CLEAR_ERRORS, GET_ERRORS } from './actions';
 
 export const returnErrors = (msg, status, id) => {
-  console.log('ne oluyor lan');
+  console.log(msg);
   return {
     type: GET_ERRORS,
     payload: { msg, status, id },

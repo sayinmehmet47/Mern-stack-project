@@ -9,6 +9,7 @@ import {
   NavLink,
 } from 'reactstrap';
 import { LoginModal } from './LoginModal';
+import { Logout } from './Logout';
 import { RegisterModal } from './RegisterModal';
 
 export const AppNavbar = () => {
@@ -33,6 +34,9 @@ export const AppNavbar = () => {
             </NavItem>
             <NavItem>
               <LoginModal />
+            </NavItem>
+            <NavItem>
+              <Logout />
             </NavItem>
           </Nav>
         </Collapse>

@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import {
   Button,
@@ -11,11 +12,17 @@ import {
   Label,
   Input,
   NavLink,
+  Alert,
 } from 'reactstrap';
 import { register } from '../Store/Actions/AuthActions';
+import { clearErrors } from '../Store/Actions/ErrActions';
 
 export const RegisterModal = (props) => {
   const { buttonLabel, className } = props;
+  const err = useSelector((state) =>
+    state.err.msj.msg ? state.err.msj.msg : state.err.msj.msg
+  );
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
   const dispatch = useDispatch();
 
   const [modal, setModal] = useState(false);
@@ -24,9 +31,10 @@ export const RegisterModal = (props) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const toggle = () => {
+  const toggle = useCallback(() => {
     setModal(!modal);
-  };
+    dispatch(clearErrors());
+  }, [modal, dispatch]);
 
   const handleChangeName = (e) => setName(e.target.value);
   const handleChangeEmail = (e) => setEmail(e.target.value);
@@ -40,11 +48,17 @@ export const RegisterModal = (props) => {
       email,
       password,
     };
-    console.log(user);
 
     // Attempt to login
     dispatch(register(user));
   };
+
+  useEffect(() => {
+    if (modal && isAuthenticated) {
+      toggle();
+    }
+  }, [modal, isAuthenticated, toggle]);
+
   return (
     <div>
       <NavLink onClick={toggle} href="#">
@@ -60,6 +74,9 @@ export const RegisterModal = (props) => {
         <ModalBody>
           <Form onSubmit={handleOnSubmit}>
             <FormGroup>
+              {}
+              <Alert>{err}</Alert>
+
               <Label for="name">Name</Label>
               <Input
                 type="text"
