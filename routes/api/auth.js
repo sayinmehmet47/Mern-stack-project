@@ -41,7 +41,7 @@ router.post('/register', async (req, res) => {
     const savedUser = await newUser.save();
     if (!savedUser) throw Error('Something went wrong saving the user');
 
-    const token = jwt.sign({ id: savedUser._id }, process.env.JWT_SECRET);
+    const token = jwt.sign({ id: savedUser._id }, '' + process.env.JWT_KEY);
 
     res.status(200).json({
       token,
@@ -72,7 +72,7 @@ router.post('/login', async (req, res) => {
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) throw Error('Invalid credentials');
 
-    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
+    const token = jwt.sign({ id: user._id }, '' + process.env.JWT_KEY, {
       expiresIn: 3600,
     });
     if (!token) throw Error('Couldnt sign the token');
