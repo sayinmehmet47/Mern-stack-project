@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
 import {
   Collapse,
   Navbar,
@@ -14,6 +15,10 @@ import { RegisterModal } from './RegisterModal';
 
 export const AppNavbar = () => {
   const [collapsed, setCollapsed] = useState(true);
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+  const user = useSelector((state) =>
+    state.auth.user ? state.auth.user.name : null
+  );
 
   const toggleNavbar = () => setCollapsed(!collapsed);
   return (
@@ -29,15 +34,25 @@ export const AppNavbar = () => {
           navbar
         >
           <Nav className="" navbar>
-            <NavItem>
-              <RegisterModal />
-            </NavItem>
-            <NavItem>
-              <LoginModal />
-            </NavItem>
-            <NavItem>
-              <Logout />
-            </NavItem>
+            {isAuthenticated ? (
+              <>
+                <NavItem>
+                  <NavLink href="#">{`welcome ${user}`}</NavLink>{' '}
+                </NavItem>{' '}
+                <NavItem>
+                  <Logout />
+                </NavItem>
+              </>
+            ) : (
+              <>
+                <NavItem>
+                  <RegisterModal />
+                </NavItem>
+                <NavItem>
+                  <LoginModal />
+                </NavItem>
+              </>
+            )}
           </Nav>
         </Collapse>
       </Navbar>

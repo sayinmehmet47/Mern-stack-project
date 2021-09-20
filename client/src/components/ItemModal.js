@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   Button,
   Modal,
@@ -16,6 +16,7 @@ import { addItems } from '../Store/Actions/itemActions';
 export const ItemModal = (props) => {
   const { buttonLabel, className } = props;
   const dispatch = useDispatch();
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
 
   const [modal, setModal] = useState(false);
   const [unmountOnClose, setUnmountOnClose] = useState(true);
@@ -40,9 +41,16 @@ export const ItemModal = (props) => {
   return (
     <div>
       <Form inline onSubmit={(e) => e.preventDefault()}>
-        <Button className="mb-3" color="danger" onClick={toggle}>
+        {isAuthenticated ? (
+          <Button className="mb-3" color="danger" onClick={toggle}>
+            Add new Person
+          </Button>
+        ) : (
+          <h4>Please login to manage items</h4>
+        )}
+        {/* <Button className="mb-3" color="danger" onClick={toggle}>
           Add new Person
-        </Button>
+        </Button> */}
       </Form>
       <Modal
         isOpen={modal}

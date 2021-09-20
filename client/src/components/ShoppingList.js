@@ -16,6 +16,8 @@ const override = css`
 export const ShoppingList = () => {
   const itemsFromRedux = useSelector((state) => state.items.item);
   const isLoading = useSelector((state) => state.items.loading);
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -36,12 +38,21 @@ export const ShoppingList = () => {
               return (
                 <CSSTransition key={index} timeout={500} classNames="fade">
                   <ListGroupItem>
-                    <Button
+                    {isAuthenticated ? (
+                      <Button
+                        onClick={() => deleteItems(item._id)}
+                        className="me-3"
+                      >
+                        ❌
+                      </Button>
+                    ) : null}
+
+                    {/* <Button
                       onClick={() => deleteItems(item._id)}
                       className="me-3"
                     >
                       ❌
-                    </Button>
+                    </Button> */}
                     {item.name}
                   </ListGroupItem>
                 </CSSTransition>
